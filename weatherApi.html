@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+    .main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+    }
+
+    .formdiv,.formSel,.result,.div{
+        background-color: antiquewhite;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 5%;
+
+    }
+
+
+    button{
+        margin: 20px;
+    }
+    
+</style>
+
+<body>
+
+    <div class="main">
+
+        <h1 class="heading">Weather App</h1>
+        
+    </div>
+
+
+<div class="formdiv">
+
+    <form action="" class="formSel" >
+        <input type="text"  id="getcityname">
+        <button>Get Weather</button>
+    </form>
+</div>
+
+<div class="result">
+    <h2 class="city"></h2>
+
+</div>
+    
+
+
+    <div class="div">
+        <img src="" class="i" alt="">
+    </div>
+
+
+
+    <script>
+
+     
+
+        let getcity = document.querySelector(".formSel");
+        getcity.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            // console.log(getcity[0].value);
+            let city1=getcity[0].value;
+            weatherapi(city1);
+            
+        });
+        
+
+
+        // let API=fbe2c44d524a4acb983155406243012
+        
+        const weatherapi = async (city1) => {
+            
+
+
+            let url = `http://api.weatherapi.com/v1/current.json?key=fbe2c44d524a4acb983155406243012&q=${city1}`;
+            let fetchwether = await fetch(url);
+            let data = await fetchwether.json();
+            console.log(data);
+            let city = document.querySelector(".city");
+            city.innerHTML = `city: ${data.location.name} condition: ${data.current.condition.text} FeelsLike: ${data.current.feelslike_c}`
+            let img2 = document.querySelector(".i");
+            if (data.current.condition.text == "Sunny") {
+                img2.src = `https://media.istockphoto.com/id/824800468/photo/sun-on-blue-sky-with-clouds.jpg?s=612x612&w=0&k=20&c=1XKIS7ggyyhj2oCZQluzIV579pkCBHq_-h9Vo4yNTmc=`
+
+            } else if (data.current.condition.text == "Mist") {
+                img2.src = `https://media.istockphoto.com/id/1209926228/photo/smog-and-air-pollution-in-mumbai.jpg?s=612x612&w=0&k=20&c=nOqCfC6CeHSfOY27XFuK3OThUHXR4CdPrkzdI-HEryY=`
+            } else if (data.current.condition.text == "Patchy rain nearby") {
+                img2.src = `https://media.istockphoto.com/id/902497530/photo/cars-driving-on-wet-road-in-the-rain-with-headlights.jpg?s=612x612&w=0&k=20&c=iC7G1-tLid7f0uqKlaBHekp3weqi0bGO5QTLUIPkeDU=`
+
+            }
+        }
+
+
+        // weatherapi();
+    </script>
+</body>
+
+</html>
